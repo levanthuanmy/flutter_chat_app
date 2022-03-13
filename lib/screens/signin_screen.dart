@@ -99,7 +99,10 @@ class _SignInScreenState extends State<SignInScreen> {
                         children: [
                           const Text("Don't have account yet?"),
                           TextButton(
-                              onPressed: () {}, child: const Text("Sign Up"))
+                              onPressed: () {
+                                Navigator.pushNamed(context, "/signup");
+                              },
+                              child: const Text("Sign Up"))
                         ],
                       )
                     ],

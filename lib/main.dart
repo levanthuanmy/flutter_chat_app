@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/screens/signin_screen.dart';
+import 'package:flutter_chat_app/screens/signup_screen.dart';
 
 import 'constants/ui_constant.dart';
 
@@ -19,7 +20,11 @@ class MyApp extends StatelessWidget {
         primarySwatch: UIConstant.createMaterialColor(UIConstant.primary),
       ),
       debugShowCheckedModeBanner: false,
-      home: const SignInScreen(),
+      routes: {
+        "/signin": (context) => const SignInScreen(),
+        "/signup": (context) => const SignUpScreen()
+      },
+      home: const SignUpScreen(),
     );
   }
 }
