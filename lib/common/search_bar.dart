@@ -12,9 +12,11 @@ class SearchBar extends StatelessWidget {
       cursorColor: UIConstant.white,
       style: TextStyle(color: UIConstant.white),
       controller: controller,
+      textAlignVertical: TextAlignVertical.center,
       decoration: InputDecoration(
         // hintStyle: TextStyle(color: UIConstant.secondary),
-        contentPadding: EdgeInsets.zero,
+        // contentPadding: EdgeInsets.zero,
+
         filled: true,
         fillColor: UIConstant.primary,
         suffixIcon: TextButton(
@@ -27,10 +29,10 @@ class SearchBar extends StatelessWidget {
           ),
         ),
         prefixIcon: Icon(Icons.search, color: UIConstant.white),
-        border: OutlineInputBorder(
-          borderSide: BorderSide.none,
-          borderRadius: BorderRadius.circular(UIConstant.borderRadius),
-        ),
+        // border: OutlineInputBorder(
+        //   borderSide: BorderSide.none,
+        //   // borderRadius: BorderRadius.circular(UIConstant.borderRadius),
+        // ),
       ),
     );
   }

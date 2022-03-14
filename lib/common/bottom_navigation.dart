@@ -9,7 +9,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
   CustomBottomNavigationBar(this.currentIndex, {Key? key}) : super(key: key);
 
-  final List _children = ["/home", "/people", "/setting"];
+  final List _children = ["/home", "/friends", "/setting"];
 
   @override
   Widget build(BuildContext context) {

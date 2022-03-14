@@ -1,1 +1,1 @@
-enum BottomNavigationIndex { home, peope, setting }
+enum BottomNavigationIndex { home, friend, setting }

@@ -3,7 +3,8 @@ import 'package:flutter_chat_app/common/bottom_navigation.dart';
 import 'package:flutter_chat_app/common/search_bar.dart';
 import 'package:flutter_chat_app/constants/constants.dart';
 import 'package:flutter_chat_app/constants/ui_constant.dart';
-import 'package:flutter_chat_app/widgets/home/chatter_card.dart';
+
+import '../widgets/home/chatters_list.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -19,44 +20,9 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
           child: Column(children: [
         Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(0),
             child: SearchBar(controller: TextEditingController())),
-        Expanded(
-          child: ListView(
-            children: const [
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: ChatterCard(
-                  isRead: true,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: ChatterCard(
-                  isRead: true,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: ChatterCard(
-                  isRead: false,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: ChatterCard(
-                  isRead: true,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: ChatterCard(
-                  isRead: false,
-                ),
-              ),
-            ],
-          ),
-        )
+        ChatterList(),
       ])),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_app/screens/friend_list_screen.dart';
 import 'package:flutter_chat_app/screens/home_screen.dart';
 import 'package:flutter_chat_app/screens/signin_screen.dart';
 import 'package:flutter_chat_app/screens/signup_screen.dart';
@@ -24,7 +25,8 @@ class MyApp extends StatelessWidget {
       routes: {
         "/signin": (context) => const SignInScreen(),
         "/signup": (context) => const SignUpScreen(),
-        "/home": (context) => const HomeScreen()
+        "/home": (context) => const HomeScreen(),
+        "/friends": (context) => const FriendListScreen()
       },
       home: const HomeScreen(),
     );
