@@ -8,6 +8,8 @@ class UIConstant {
   static Color tertiary = const Color.fromRGBO(229, 229, 229, 1);
   static Color white = Colors.white;
 
+  static Color black = Colors.black;
+
   static const double borderRadius = 10;
 
   static double fontSize12 = 12;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_app/screens/home_screen.dart';
 import 'package:flutter_chat_app/screens/signin_screen.dart';
 import 'package:flutter_chat_app/screens/signup_screen.dart';
 
@@ -22,9 +23,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: {
         "/signin": (context) => const SignInScreen(),
-        "/signup": (context) => const SignUpScreen()
+        "/signup": (context) => const SignUpScreen(),
+        "/home": (context) => const HomeScreen()
       },
-      home: const SignUpScreen(),
+      home: const HomeScreen(),
     );
   }
 }
