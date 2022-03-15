@@ -19,6 +19,8 @@ class UIConstant {
   static double fontSize24 = 24;
   static double fontSize32 = 32;
 
+  static double fontNameTitle = 18;
+
   static FontWeight fontWeightLight = FontWeight.w300;
   static FontWeight fontWeightNormal = FontWeight.w400;
   static FontWeight fontWeightMedium = FontWeight.w500;

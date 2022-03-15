@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_app/screens/chat_room_screen.dart';
 import 'package:flutter_chat_app/screens/friend_list_screen.dart';
 import 'package:flutter_chat_app/screens/home_screen.dart';
 import 'package:flutter_chat_app/screens/signin_screen.dart';
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
               print('[ERROR] ${snapshot.error.toString()}');
               return Text('Something went wrong!');
             } else if (snapshot.hasData) {
-              return MyHomePage();
+              return ChatRoomScreen();
             } else
               return Center(
                 child: CircularProgressIndicator(),
