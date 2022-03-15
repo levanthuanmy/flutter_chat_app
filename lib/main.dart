@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
               print('[ERROR] ${snapshot.error.toString()}');
               return Text('Something went wrong!');
             } else if (snapshot.hasData) {
-              return ChatRoomScreen();
+              return HomeScreen();
             } else
               return Center(
                 child: CircularProgressIndicator(),

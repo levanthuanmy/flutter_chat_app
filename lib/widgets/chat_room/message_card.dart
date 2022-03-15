@@ -18,7 +18,8 @@ class MessageCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.only(top: isPreviousUser ? 4 : 16, right: 8),
+        margin:
+            EdgeInsets.only(top: isPreviousUser ? 4 : 16, right: 8, left: 8),
         child: isUserSent ? buildUserSent(context) : buildPartnerSent(context));
   }
 
@@ -27,7 +28,7 @@ class MessageCard extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Container(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
               color: UIConstant.primary,
               borderRadius: BorderRadius.circular(UIConstant.borderRadius)),

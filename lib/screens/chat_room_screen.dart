@@ -41,11 +41,11 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                         minimumSize: const Size(40, 40),
                         alignment: Alignment.center),
                     onPressed: () {
-                      // Navigator.pop(context);
+                      Navigator.pop(context);
                     },
                     child: const Icon(Icons.chevron_left)),
                 Text(
-                  "Jonny Sins",
+                  "Jonny Seen",
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: UIConstant.fontNameTitle),

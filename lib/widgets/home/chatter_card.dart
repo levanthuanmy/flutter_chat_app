@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/constants/ui_constant.dart';
+import 'package:flutter_chat_app/screens/chat_room_screen.dart';
 
 class ChatterCard extends StatelessWidget {
   final bool isRead;
@@ -8,7 +10,10 @@ class ChatterCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () {},
+      onPressed: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => ChatRoomScreen()));
+      },
       style: TextButton.styleFrom(
           primary: UIConstant.black,
           textStyle: TextStyle(
