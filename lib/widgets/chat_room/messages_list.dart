@@ -72,12 +72,10 @@ class MessagesList extends StatelessWidget {
             isPreviousUser = true;
           }
         }
-        debugPrint("$isPreviousUser");
         return MessageCard(
           message: messagesList[index],
           isUserSent: messagesList[index].user.id == fakeUserId,
-          isPreviousUser: index > 0 &&
-              messagesList[index - 1].user.id == messagesList[index].user.id,
+          isPreviousUser: isPreviousUser,
         );
       },
     ));

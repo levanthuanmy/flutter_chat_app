@@ -16,26 +16,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-          child: Column(children: [
+    return SafeArea(
+      child: Column(children: [
         Padding(
             padding: const EdgeInsets.all(0),
             child: SearchBar(controller: TextEditingController())),
         ChatterList(),
-      ])),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: TextButton(
-          onPressed: () {},
-          child: Icon(
-            Icons.add,
-            color: UIConstant.white,
-          ),
-        ),
-      ),
-      bottomNavigationBar:
-          CustomBottomNavigationBar(BottomNavigationIndex.home.index),
+      ]),
     );
   }
 }

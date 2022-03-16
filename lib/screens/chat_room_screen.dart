@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/constants/ui_constant.dart';
 import 'package:flutter_chat_app/widgets/chat_room/message_field.dart';
 import 'package:flutter_chat_app/widgets/chat_room/messages_list.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class ChatRoomScreen extends StatefulWidget {
   const ChatRoomScreen({Key? key}) : super(key: key);

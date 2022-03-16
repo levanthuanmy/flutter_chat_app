@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_app/common/bottom_navigation.dart';
 import 'package:flutter_chat_app/screens/chat_room_screen.dart';
 import 'package:flutter_chat_app/screens/friend_list_screen.dart';
 import 'package:flutter_chat_app/screens/home_screen.dart';
@@ -41,12 +42,41 @@ class MyApp extends StatelessWidget {
               print('[ERROR] ${snapshot.error.toString()}');
               return Text('Something went wrong!');
             } else if (snapshot.hasData) {
-              return HomeScreen();
+              return const AppContainer();
             } else
               return Center(
                 child: CircularProgressIndicator(),
               );
           },
+        ));
+  }
+}
+
+class AppContainer extends StatefulWidget {
+  const AppContainer({Key? key}) : super(key: key);
+
+  @override
+  State<AppContainer> createState() => _AppContainerState();
+}
+
+class _AppContainerState extends State<AppContainer> {
+  int currentIndex = 0;
+  static const List<Widget> _widgetOptions = [HomeScreen(), FriendListScreen()];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      currentIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: UIConstant.white,
+        body: _widgetOptions.elementAt(currentIndex),
+        bottomNavigationBar: CustomBottomNavigationBar(
+          currentIndex: currentIndex,
+          onTap: _onItemTapped,
         ));
   }
 }

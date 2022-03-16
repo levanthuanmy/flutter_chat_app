@@ -18,7 +18,6 @@ class MessageField extends StatelessWidget {
         children: [
           Expanded(
             child: TextField(
-                autofocus: true,
                 controller: chatController,
                 maxLines: null,
                 textInputAction: TextInputAction.newline,

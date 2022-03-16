@@ -8,31 +8,33 @@ class SearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      cursorColor: UIConstant.white,
-      style: TextStyle(color: UIConstant.white),
-      controller: controller,
-      textAlignVertical: TextAlignVertical.center,
-      decoration: InputDecoration(
-        // hintStyle: TextStyle(color: UIConstant.secondary),
-        // contentPadding: EdgeInsets.zero,
+    return Material(
+      child: TextField(
+        cursorColor: UIConstant.white,
+        style: TextStyle(color: UIConstant.white),
+        controller: controller,
+        textAlignVertical: TextAlignVertical.center,
+        decoration: InputDecoration(
+          // hintStyle: TextStyle(color: UIConstant.secondary),
+          // contentPadding: EdgeInsets.zero,
 
-        filled: true,
-        fillColor: UIConstant.primary,
-        suffixIcon: TextButton(
-          onPressed: () {
-            debugPrint("Search press");
-          },
-          child: Icon(
-            Icons.add,
-            color: UIConstant.white,
+          filled: true,
+          fillColor: UIConstant.primary,
+          suffixIcon: TextButton(
+            onPressed: () {
+              debugPrint("Search press");
+            },
+            child: Icon(
+              Icons.add,
+              color: UIConstant.white,
+            ),
           ),
+          prefixIcon: Icon(Icons.search, color: UIConstant.white),
+          // border: OutlineInputBorder(
+          //   borderSide: BorderSide.none,
+          //   // borderRadius: BorderRadius.circular(UIConstant.borderRadius),
+          // ),
         ),
-        prefixIcon: Icon(Icons.search, color: UIConstant.white),
-        // border: OutlineInputBorder(
-        //   borderSide: BorderSide.none,
-        //   // borderRadius: BorderRadius.circular(UIConstant.borderRadius),
-        // ),
       ),
     );
   }

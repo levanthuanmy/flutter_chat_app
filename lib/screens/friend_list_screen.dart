@@ -16,16 +16,12 @@ class FriendListScreen extends StatefulWidget {
 class _FriendListScreenState extends State<FriendListScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-          child: Column(children: [
-        Padding(
-            padding: const EdgeInsets.all(0),
-            child: SearchBar(controller: TextEditingController())),
-        FriendList()
-      ])),
-      bottomNavigationBar:
-          CustomBottomNavigationBar(BottomNavigationIndex.friend.index),
-    );
+    return SafeArea(
+        child: Column(children: [
+      Padding(
+          padding: const EdgeInsets.all(0),
+          child: SearchBar(controller: TextEditingController())),
+      FriendList()
+    ]));
   }
 }
