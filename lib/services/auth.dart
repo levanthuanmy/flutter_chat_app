@@ -4,6 +4,7 @@ import 'package:flutter_chat_app/models/my_user.dart';
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  // convert Firebase User to MyUser
   MyUser? _getUserFromFirebase(User? fbUser) {
     if (fbUser != null) {
       return MyUser(
@@ -17,14 +18,16 @@ class AuthService {
     }
   }
 
+  // auth change user stream
+  Stream<MyUser?> get user {
+    return _auth.authStateChanges().map(_getUserFromFirebase);
+  }
+
   // sign in anonymous
   Future<MyUser?> signInAnonymous() async {
     try {
       UserCredential userCredential = await _auth.signInAnonymously();
       return _getUserFromFirebase(userCredential.user);
-    } on FirebaseAuthException catch (e) {
-      print('[ERROR] Sign in anonymous: ${e.toString()}');
-      return null;
     } catch (e) {
       print('[ERROR] Sign in anonymous: ${e.toString()}');
       return null;
@@ -58,4 +61,11 @@ class AuthService {
   }
 
   // sign out
+  Future<void> signOut() async {
+    try {
+      await _auth.signOut();
+    } catch (e) {
+      print('[ERROR] Sign out: ${e.toString()}');
+    }
+  }
 }

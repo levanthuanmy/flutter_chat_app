@@ -8,6 +8,7 @@ class CustomInputField extends StatelessWidget {
   final Widget? suffixIcon;
   final TextEditingController controller;
   final String errorText;
+  final void Function(String) onChanged;
 
   const CustomInputField({
     Key? key,
@@ -16,12 +17,12 @@ class CustomInputField extends StatelessWidget {
     this.errorText = "",
     this.hintText,
     this.obscureText = false,
+    required this.onChanged,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      // margin: const EdgeInsets.fromLTRB(0, 16, 0, 0),
       child: TextField(
         controller: controller,
         decoration: InputDecoration(
@@ -37,6 +38,7 @@ class CustomInputField extends StatelessWidget {
           ),
         ),
         obscureText: obscureText,
+        onChanged: onChanged,
       ),
     );
   }

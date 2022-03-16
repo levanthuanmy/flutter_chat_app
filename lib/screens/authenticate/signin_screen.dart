@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/common/auth_button.dart';
 import 'package:flutter_chat_app/common/custom_input_field.dart';
+import 'package:flutter_chat_app/constants/ui_constant.dart';
 import 'package:flutter_chat_app/models/my_user.dart';
 import 'package:flutter_chat_app/services/auth.dart';
-
-import '../constants/ui_constant.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -15,6 +14,8 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   final AuthService _authService = AuthService();
+  String _email = "";
+  String _password = "";
 
   double _getScreenWidth(BuildContext context) {
     return MediaQuery.of(context).size.width;
@@ -67,6 +68,11 @@ class _SignInScreenState extends State<SignInScreen> {
                         hintText: "Email",
                         obscureText: true,
                         suffixIcon: const Icon(Icons.alternate_email),
+                        onChanged: (val) {
+                          setState(() {
+                            _email = val;
+                          });
+                        },
                       ),
                       const SizedBox(
                         height: 16,
@@ -76,6 +82,11 @@ class _SignInScreenState extends State<SignInScreen> {
                         hintText: "Password",
                         obscureText: true,
                         suffixIcon: const Icon(Icons.lock_open),
+                        onChanged: (val) {
+                          setState(() {
+                            _password = val;
+                          });
+                        },
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 0),
@@ -97,7 +108,12 @@ class _SignInScreenState extends State<SignInScreen> {
                           ],
                         ),
                       ),
-                      AuthButton(buttonText: "Login", onPressed: () {}),
+                      AuthButton(
+                        buttonText: "Login",
+                        onPressed: () {
+                          print('${_email} - ${_password}');
+                        },
+                      ),
                       AuthButton(
                         buttonText: "Login Anonymous",
                         onPressed: () async {

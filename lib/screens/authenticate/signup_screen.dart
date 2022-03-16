@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/common/auth_button.dart';
 import 'package:flutter_chat_app/common/custom_input_field.dart';
-
-import '../constants/ui_constant.dart';
+import 'package:flutter_chat_app/constants/ui_constant.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -45,6 +44,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       hintText: "Email",
                       obscureText: true,
                       suffixIcon: const Icon(Icons.alternate_email),
+                      onChanged: (val) {},
                     ),
                     const SizedBox(
                       height: 16,
@@ -54,6 +54,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       hintText: "Password",
                       obscureText: true,
                       suffixIcon: const Icon(Icons.lock_open),
+                      onChanged: (val) {},
                     ),
                     const SizedBox(
                       height: 16,
@@ -63,6 +64,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       hintText: "Confirm password",
                       obscureText: true,
                       suffixIcon: const Icon(Icons.lock_open),
+                      onChanged: (val) {},
                     ),
                     const SizedBox(
                       height: 16,

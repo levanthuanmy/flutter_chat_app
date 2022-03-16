@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_app/common/auth_button.dart';
+import 'package:flutter_chat_app/services/auth.dart';
 import 'package:flutter_chat_app/widgets/friend_list/friend_list.dart';
 
 import '../common/bottom_navigation.dart';
@@ -14,14 +16,25 @@ class FriendListScreen extends StatefulWidget {
 }
 
 class _FriendListScreenState extends State<FriendListScreen> {
+  final AuthService _authService = AuthService();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Column(children: [
       Padding(
-          padding: const EdgeInsets.all(0),
-          child: SearchBar(controller: TextEditingController())),
-      FriendList()
+        padding: const EdgeInsets.all(0),
+        child: SearchBar(
+          controller: TextEditingController(),
+        ),
+      ),
+      AuthButton(
+        buttonText: "Sign Out (Để tạm D:)",
+        onPressed: () async {
+          await _authService.signOut();
+        },
+      ),
+      FriendList(),
     ]));
   }
 }
