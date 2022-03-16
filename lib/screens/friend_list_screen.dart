@@ -22,19 +22,19 @@ class _FriendListScreenState extends State<FriendListScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Column(children: [
-      Padding(
-        padding: const EdgeInsets.all(0),
-        child: SearchBar(
-          controller: TextEditingController(),
-        ),
+      const Padding(
+        padding: EdgeInsets.all(0),
+        child: SearchBar(),
       ),
-      AuthButton(
-        buttonText: "Sign Out (Để tạm D:)",
-        onPressed: () async {
-          await _authService.signOut();
-        },
-      ),
+      // AuthButton(
+      //   buttonText: "Sign Out (Để tạm D:)",
+      //   onPressed: () async {
+      //     await _authService.signOut();
+      //   },
+      // ),
       FriendList(),
+      const Padding(padding: EdgeInsets.all(0), child: SearchBar()),
+      FriendList()
     ]));
   }
 }

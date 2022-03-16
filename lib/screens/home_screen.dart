@@ -18,9 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Column(children: [
-        Padding(
-            padding: const EdgeInsets.all(0),
-            child: SearchBar(controller: TextEditingController())),
+        const Padding(padding: EdgeInsets.all(0), child: SearchBar()),
         ChatterList(),
       ]),
     );

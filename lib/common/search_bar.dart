@@ -1,39 +1,55 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_app/screens/friends_search_screen.dart';
 
 import '../constants/ui_constant.dart';
 
 class SearchBar extends StatelessWidget {
-  final TextEditingController controller;
-  const SearchBar({Key? key, required this.controller}) : super(key: key);
+  const SearchBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: TextField(
-        cursorColor: UIConstant.white,
-        style: TextStyle(color: UIConstant.white),
-        controller: controller,
-        textAlignVertical: TextAlignVertical.center,
-        decoration: InputDecoration(
-          // hintStyle: TextStyle(color: UIConstant.secondary),
-          // contentPadding: EdgeInsets.zero,
+    // return Material(
+    //   child: TextField(
+    //     cursorColor: UIConstant.white,
+    //     style: TextStyle(color: UIConstant.white),
+    //     textAlignVertical: TextAlignVertical.center,
+    //     onTap: () {
+    //       Navigator.push(context,
+    //           MaterialPageRoute(builder: (_) => const FriendsSearchScreen()));
+    //     },
 
-          filled: true,
-          fillColor: UIConstant.primary,
-          suffixIcon: TextButton(
-            onPressed: () {
-              debugPrint("Search press");
-            },
-            child: Icon(
-              Icons.add,
-              color: UIConstant.white,
-            ),
-          ),
-          prefixIcon: Icon(Icons.search, color: UIConstant.white),
-          // border: OutlineInputBorder(
-          //   borderSide: BorderSide.none,
-          //   // borderRadius: BorderRadius.circular(UIConstant.borderRadius),
-          // ),
+    //     decoration: InputDecoration(
+    //       // hintStyle: TextStyle(color: UIConstant.secondary),
+    //       // contentPadding: EdgeInsets.zero,
+
+    //       filled: true,
+    //       fillColor: UIConstant.primary,
+
+    //       prefixIcon: Icon(Icons.search, color: UIConstant.white),
+    //       // border: OutlineInputBorder(
+    //       //   borderSide: BorderSide.none,
+    //       //   // borderRadius: BorderRadius.circular(UIConstant.borderRadius),
+    //       // ),
+    //     ),
+    //   ),
+    // );
+    return Container(
+      color: UIConstant.primary,
+      height: 56,
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (_) => const FriendsSearchScreen()));
+        },
+        child: Row(
+          children: [
+            Icon(Icons.search, color: UIConstant.white),
+            Text(
+              "Search friends...",
+              style: TextStyle(color: UIConstant.tertiary),
+            )
+          ],
         ),
       ),
     );
