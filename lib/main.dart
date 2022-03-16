@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/common/bottom_navigation.dart';
 import 'package:flutter_chat_app/screens/chat_room_screen.dart';
@@ -7,8 +8,6 @@ import 'package:flutter_chat_app/screens/signin_screen.dart';
 import 'package:flutter_chat_app/screens/signup_screen.dart';
 
 import 'constants/ui_constant.dart';
-
-import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,14 +38,16 @@ class MyApp extends StatelessWidget {
           future: _fbApp,
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.hasError) {
-              print('[ERROR] ${snapshot.error.toString()}');
-              return Text('Something went wrong!');
+              debugPrint('[ERROR] ${snapshot.error.toString()}');
+              return const Text('Something went wrong!');
             } else if (snapshot.hasData) {
-              return const AppContainer();
-            } else
-              return Center(
+              // return const AppContainer();
+              return const SignInScreen();
+            } else {
+              return const Center(
                 child: CircularProgressIndicator(),
               );
+            }
           },
         ));
   }
@@ -91,12 +92,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [Text('hello')],
-      ),
-    ));
+    return const Scaffold();
   }
 }

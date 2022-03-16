@@ -1,8 +1,8 @@
-import 'package:flutter_chat_app/models/user.dart';
+import 'package:flutter_chat_app/models/my_user.dart';
 
 class MessageDTO {
   late String id;
-  User user;
+  MyUser user;
   String message;
   late DateTime createdAt;
   MessageDTO({

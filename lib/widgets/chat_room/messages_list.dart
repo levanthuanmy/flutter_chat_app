@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/models/message-dto.dart';
 import 'package:flutter_chat_app/widgets/chat_room/message_card.dart';
 
-import '../../models/user.dart';
+import '../../models/my_user.dart';
 
 String fakeUserId = "1";
 
 class MessagesList extends StatelessWidget {
   final List<MessageDTO> messagesList = [
     MessageDTO.create(
-        user: User(
+        user: MyUser(
             id: "1",
             name: "Naruto Uzumaki",
             email: "a",
@@ -17,7 +17,7 @@ class MessagesList extends StatelessWidget {
                 "https://gamek.mediacdn.vn/thumb_w/640/133514250583805952/2020/7/11/narutossagemode-15944657133061535033027.png"),
         message: "Mã hóa cửu vỹ bằng base64"),
     MessageDTO.create(
-        user: User(
+        user: MyUser(
             id: "1",
             name: "Naruto Uzumaki",
             email: "a",
@@ -25,7 +25,7 @@ class MessagesList extends StatelessWidget {
                 "https://gamek.mediacdn.vn/thumb_w/640/133514250583805952/2020/7/11/narutossagemode-15944657133061535033027.png"),
         message: "Mã hóa cửu vỹ bằng sha256"),
     MessageDTO.create(
-        user: User(
+        user: MyUser(
             id: "3",
             name: "Naruto Uzumaki",
             email: "a",
@@ -33,7 +33,7 @@ class MessagesList extends StatelessWidget {
                 "https://gamek.mediacdn.vn/thumb_w/640/133514250583805952/2020/7/11/narutossagemode-15944657133061535033027.png"),
         message: "Mã hóa cửu vỹ bằng hex"),
     MessageDTO.create(
-        user: User(
+        user: MyUser(
             id: "3",
             name: "Naruto Uzumaki",
             email: "a",
@@ -41,7 +41,7 @@ class MessagesList extends StatelessWidget {
                 "https://gamek.mediacdn.vn/thumb_w/640/133514250583805952/2020/7/11/narutossagemode-15944657133061535033027.png"),
         message: "Mã hóa cửu vỹ bằng hex"),
     MessageDTO.create(
-        user: User(
+        user: MyUser(
             id: "3",
             name: "Naruto Uzumaki",
             email: "a",
@@ -49,7 +49,7 @@ class MessagesList extends StatelessWidget {
                 "https://gamek.mediacdn.vn/thumb_w/640/133514250583805952/2020/7/11/narutossagemode-15944657133061535033027.png"),
         message: "Mã hóa cửu vỹ bằng hex"),
     MessageDTO.create(
-        user: User(
+        user: MyUser(
             id: "1",
             name: "Naruto Uzumaki",
             email: "a",

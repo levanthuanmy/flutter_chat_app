@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/common/auth_button.dart';
 import 'package:flutter_chat_app/common/custom_input_field.dart';
+import 'package:flutter_chat_app/models/my_user.dart';
+import 'package:flutter_chat_app/services/auth.dart';
 
 import '../constants/ui_constant.dart';
 
@@ -12,6 +14,8 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
+  final AuthService _authService = AuthService();
+
   double _getScreenWidth(BuildContext context) {
     return MediaQuery.of(context).size.width;
   }
@@ -74,7 +78,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         suffixIcon: const Icon(Icons.lock_open),
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(vertical: 8),
+                        padding: EdgeInsets.symmetric(vertical: 0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -94,15 +98,25 @@ class _SignInScreenState extends State<SignInScreen> {
                         ),
                       ),
                       AuthButton(buttonText: "Login", onPressed: () {}),
+                      AuthButton(
+                        buttonText: "Login Anonymous",
+                        onPressed: () async {
+                          MyUser? res = await _authService.signInAnonymous();
+                          if (res != null) {
+                            print('Signed in as anonymous: ${res.id}');
+                          }
+                        },
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Text("Don't have account yet?"),
                           TextButton(
-                              onPressed: () {
-                                Navigator.pushNamed(context, "/signup");
-                              },
-                              child: const Text("Sign Up"))
+                            onPressed: () {
+                              Navigator.pushNamed(context, "/signup");
+                            },
+                            child: const Text("Sign Up"),
+                          )
                         ],
                       )
                     ],

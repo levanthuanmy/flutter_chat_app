@@ -1,15 +1,15 @@
-class User {
+class MyUser {
   late String id;
   String name;
   String email;
   late String? avatar;
 
-  User({
+  MyUser({
     required this.id,
     required this.name,
     required this.email,
     required this.avatar,
   });
 
-  User.create({required this.name, required this.email, this.avatar});
+  MyUser.create({required this.name, required this.email, this.avatar});
 }
