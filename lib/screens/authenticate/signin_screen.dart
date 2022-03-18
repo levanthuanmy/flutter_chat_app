@@ -14,8 +14,33 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   final AuthService _authService = AuthService();
-  String _email = "";
-  String _password = "";
+
+  late TextEditingController mailController, passwordController;
+
+  @override
+  void initState() {
+    mailController = TextEditingController()
+      ..addListener(
+        () {
+          setState(() {});
+        },
+      );
+    passwordController = TextEditingController()
+      ..addListener(
+        () {
+          setState(() {});
+        },
+      );
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    mailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   double _getScreenWidth(BuildContext context) {
     return MediaQuery.of(context).size.width;
@@ -64,29 +89,19 @@ class _SignInScreenState extends State<SignInScreen> {
                         height: 16,
                       ),
                       CustomInputField(
-                        controller: TextEditingController(),
+                        controller: mailController,
                         hintText: "Email",
-                        obscureText: true,
+                        obscureText: false,
                         suffixIcon: const Icon(Icons.alternate_email),
-                        onChanged: (val) {
-                          setState(() {
-                            _email = val;
-                          });
-                        },
                       ),
                       const SizedBox(
                         height: 16,
                       ),
                       CustomInputField(
-                        controller: TextEditingController(),
+                        controller: passwordController,
                         hintText: "Password",
                         obscureText: true,
                         suffixIcon: const Icon(Icons.lock_open),
-                        onChanged: (val) {
-                          setState(() {
-                            _password = val;
-                          });
-                        },
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 0),
@@ -110,8 +125,13 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                       AuthButton(
                         buttonText: "Login",
-                        onPressed: () {
-                          print('${_email} - ${_password}');
+                        onPressed: () async {
+                          MyUser? res = await _authService.signIn(
+                              mailController.text, passwordController.text);
+                          print(
+                              "$mailController.text $passwordController.text");
+                          if (res != null)
+                            print('Signed in success: ${res.id}');
                         },
                       ),
                       AuthButton(

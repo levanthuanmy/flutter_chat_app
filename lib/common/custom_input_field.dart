@@ -8,7 +8,6 @@ class CustomInputField extends StatelessWidget {
   final Widget? suffixIcon;
   final TextEditingController controller;
   final String errorText;
-  final void Function(String) onChanged;
 
   const CustomInputField({
     Key? key,
@@ -17,7 +16,6 @@ class CustomInputField extends StatelessWidget {
     this.errorText = "",
     this.hintText,
     this.obscureText = false,
-    required this.onChanged,
   }) : super(key: key);
 
   @override
@@ -38,7 +36,6 @@ class CustomInputField extends StatelessWidget {
           ),
         ),
         obscureText: obscureText,
-        onChanged: onChanged,
       ),
     );
   }
