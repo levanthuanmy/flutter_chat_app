@@ -55,110 +55,89 @@ class _SignInScreenState extends State<SignInScreen> {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          color: UIConstant.primary,
+          padding: const EdgeInsets.all(32),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              Container(
-                width: _getScreenWidth(context),
-                height: _getScreenHeight(context) * 0.6,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
+            children: [
+              Row(
+                children: [
+                  Text(
+                    'Sign In',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: UIConstant.fontSize24,
+                      fontWeight: UIConstant.fontWeightMedium,
+                    ),
                   ),
-                  color: Colors.white,
-                ),
-                child: Container(
-                  padding: const EdgeInsets.all(32),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            'Sign In',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: UIConstant.fontSize24,
-                              fontWeight: UIConstant.fontWeightMedium,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      CustomInputField(
-                        controller: mailController,
-                        hintText: "Email",
-                        obscureText: false,
-                        suffixIcon: const Icon(Icons.alternate_email),
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      CustomInputField(
-                        controller: passwordController,
-                        hintText: "Password",
-                        obscureText: true,
-                        suffixIcon: const Icon(Icons.lock_open),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            TextButton(
-                                onPressed: () {},
-                                child: Text(
-                                  "Forgot password",
-                                  style: TextStyle(color: UIConstant.secondary),
-                                )),
-                            // TextButton(
-                            //     onPressed: () {},
-                            //     child: Text(
-                            //       "Remember me",
-                            //       style: TextStyle(color: UIConstant.secondary),
-                            //     ))
-                          ],
-                        ),
-                      ),
-                      AuthButton(
-                        buttonText: "Login",
-                        onPressed: () async {
-                          MyUser? res = await _authService.signIn(
-                              mailController.text, passwordController.text);
-                          print(
-                              "$mailController.text $passwordController.text");
-                          if (res != null)
-                            print('Signed in success: ${res.id}');
-                        },
-                      ),
-                      AuthButton(
-                        buttonText: "Login Anonymous",
-                        onPressed: () async {
-                          MyUser? res = await _authService.signInAnonymous();
-                          if (res != null) {
-                            print('Signed in as anonymous: ${res.id}');
-                          }
-                        },
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text("Don't have account yet?"),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, "/signup");
-                            },
-                            child: const Text("Sign Up"),
-                          )
-                        ],
-                      )
-                    ],
-                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              CustomInputField(
+                controller: mailController,
+                hintText: "Email",
+                obscureText: false,
+                suffixIcon: const Icon(Icons.alternate_email),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              CustomInputField(
+                controller: passwordController,
+                hintText: "Password",
+                obscureText: true,
+                suffixIcon: const Icon(Icons.lock_open),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          "Forgot password",
+                          style: TextStyle(color: UIConstant.secondary),
+                        )),
+                    // TextButton(
+                    //     onPressed: () {},
+                    //     child: Text(
+                    //       "Remember me",
+                    //       style: TextStyle(color: UIConstant.secondary),
+                    //     ))
+                  ],
                 ),
               ),
+              AuthButton(
+                buttonText: "Login",
+                onPressed: () async {
+                  MyUser? res = await _authService.signIn(
+                      mailController.text, passwordController.text);
+                  print("$mailController.text $passwordController.text");
+                  if (res != null) print('Signed in success: ${res.id}');
+                },
+              ),
+              AuthButton(
+                buttonText: "Login Anonymous",
+                onPressed: () async {
+                  MyUser? res = await _authService.signInAnonymous();
+                  if (res != null) {
+                    print('Signed in as anonymous: ${res.id}');
+                  }
+                },
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("Don't have account yet?"),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, "/signup");
+                    },
+                    child: const Text("Sign Up"),
+                  )
+                ],
+              )
             ],
           ),
         ),

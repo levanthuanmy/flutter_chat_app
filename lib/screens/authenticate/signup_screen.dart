@@ -55,80 +55,72 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          color: UIConstant.white,
+          padding: const EdgeInsets.all(32),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                padding: const EdgeInsets.all(32),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          'Sign Up',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: UIConstant.fontSize24,
-                            fontWeight: UIConstant.fontWeightMedium,
-                          ),
-                        ),
-                      ],
+            children: [
+              Row(
+                children: [
+                  Text(
+                    'Sign Up',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: UIConstant.fontSize24,
+                      fontWeight: UIConstant.fontWeightMedium,
                     ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    CustomInputField(
-                      controller: mailController,
-                      hintText: "Email",
-                      obscureText: false,
-                      suffixIcon: const Icon(Icons.alternate_email),
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    CustomInputField(
-                      controller: passwordController,
-                      hintText: "Password",
-                      obscureText: true,
-                      suffixIcon: const Icon(Icons.lock_open),
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    CustomInputField(
-                      controller: confirmPasswordController,
-                      hintText: "Confirm password",
-                      obscureText: true,
-                      suffixIcon: const Icon(Icons.lock_open),
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    AuthButton(
-                        buttonText: "Sign Up",
-                        onPressed: () async {
-                          MyUser? res = await _authService.register(
-                              mailController.text, passwordController.text);
-                          if (res != null) {
-                            print('Signed up success: ${res.id}');
-                          }
-                        }),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text("Already have an account?"),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, "/signin");
-                          },
-                          child: const Text("Login"),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
+                  ),
+                ],
               ),
+              const SizedBox(
+                height: 16,
+              ),
+              CustomInputField(
+                controller: mailController,
+                hintText: "Email",
+                obscureText: false,
+                suffixIcon: const Icon(Icons.alternate_email),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              CustomInputField(
+                controller: passwordController,
+                hintText: "Password",
+                obscureText: true,
+                suffixIcon: const Icon(Icons.lock_open),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              CustomInputField(
+                controller: confirmPasswordController,
+                hintText: "Confirm password",
+                obscureText: true,
+                suffixIcon: const Icon(Icons.lock_open),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              AuthButton(
+                  buttonText: "Sign Up",
+                  onPressed: () async {
+                    MyUser? res = await _authService.register(
+                        mailController.text, passwordController.text);
+                    if (res != null) {
+                      print('Signed up success: ${res.id}');
+                    }
+                  }),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("Already have an account?"),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, "/signin");
+                    },
+                    child: const Text("Login"),
+                  ),
+                ],
+              )
             ],
           ),
         ),
