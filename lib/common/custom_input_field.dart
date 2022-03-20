@@ -8,6 +8,7 @@ class CustomInputField extends StatelessWidget {
   final Widget? suffixIcon;
   final TextEditingController controller;
   final String errorText;
+  final bool isValidate;
 
   const CustomInputField({
     Key? key,
@@ -16,27 +17,27 @@ class CustomInputField extends StatelessWidget {
     this.errorText = "",
     this.hintText,
     this.obscureText = false,
+    this.isValidate = true,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: TextField(
-        controller: controller,
-        decoration: InputDecoration(
-          hintText: hintText,
-          hintStyle: TextStyle(color: UIConstant.secondary),
-          suffixIcon: suffixIcon,
-          border: OutlineInputBorder(
-            borderSide: const BorderSide(
-              color: Colors.grey,
-              width: 1.0,
-            ),
-            borderRadius: BorderRadius.circular(UIConstant.borderRadius),
+    return TextField(
+      controller: controller,
+      decoration: InputDecoration(
+        errorText: !isValidate ? errorText : null,
+        hintText: hintText,
+        hintStyle: TextStyle(color: UIConstant.secondary),
+        suffixIcon: suffixIcon,
+        border: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Colors.grey,
+            width: 1.0,
           ),
+          borderRadius: BorderRadius.circular(UIConstant.borderRadius),
         ),
-        obscureText: obscureText,
       ),
+      obscureText: obscureText,
     );
   }
 }

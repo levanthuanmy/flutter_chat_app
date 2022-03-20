@@ -16,6 +16,7 @@ class _SignInScreenState extends State<SignInScreen> {
   final AuthService _authService = AuthService();
 
   late TextEditingController mailController, passwordController;
+  bool _emailValid = true, _passwordValid = true;
 
   @override
   void initState() {
@@ -40,6 +41,26 @@ class _SignInScreenState extends State<SignInScreen> {
     mailController.dispose();
     passwordController.dispose();
     super.dispose();
+  }
+
+  void _handleLogIn() async {
+    if (mailController.text.isEmpty || passwordController.text.isEmpty) {
+      setState(() {
+        _emailValid = mailController.text.isNotEmpty;
+        _passwordValid = passwordController.text.isNotEmpty;
+      });
+
+      return;
+    }
+
+    MyUser? res =
+        await _authService.signIn(mailController.text, passwordController.text);
+
+    if (res != null) {
+      print('Signed in success: ${res.id}');
+    } else {
+      print('Sign in fail');
+    }
   }
 
   @override
@@ -70,6 +91,8 @@ class _SignInScreenState extends State<SignInScreen> {
                 hintText: "Email",
                 obscureText: false,
                 suffixIcon: const Icon(Icons.alternate_email),
+                errorText: "Wrong email",
+                isValidate: _emailValid,
               ),
               const SizedBox(
                 height: 16,
@@ -79,6 +102,8 @@ class _SignInScreenState extends State<SignInScreen> {
                 hintText: "Password",
                 obscureText: true,
                 suffixIcon: const Icon(Icons.lock_open),
+                errorText: "Wrong password",
+                isValidate: _passwordValid,
               ),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 0),
@@ -102,12 +127,7 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
               AuthButton(
                 buttonText: "Login",
-                onPressed: () async {
-                  MyUser? res = await _authService.signIn(
-                      mailController.text, passwordController.text);
-                  print("$mailController.text $passwordController.text");
-                  if (res != null) print('Signed in success: ${res.id}');
-                },
+                onPressed: _handleLogIn,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
