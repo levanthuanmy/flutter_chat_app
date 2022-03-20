@@ -42,14 +42,6 @@ class _SignInScreenState extends State<SignInScreen> {
     super.dispose();
   }
 
-  double _getScreenWidth(BuildContext context) {
-    return MediaQuery.of(context).size.width;
-  }
-
-  double _getScreenHeight(BuildContext context) {
-    return MediaQuery.of(context).size.height;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,15 +107,6 @@ class _SignInScreenState extends State<SignInScreen> {
                       mailController.text, passwordController.text);
                   print("$mailController.text $passwordController.text");
                   if (res != null) print('Signed in success: ${res.id}');
-                },
-              ),
-              AuthButton(
-                buttonText: "Login Anonymous",
-                onPressed: () async {
-                  MyUser? res = await _authService.signInAnonymous();
-                  if (res != null) {
-                    print('Signed in as anonymous: ${res.id}');
-                  }
                 },
               ),
               Row(
