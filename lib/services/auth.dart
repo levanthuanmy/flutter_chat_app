@@ -1,5 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_chat_app/models/my_user.dart';
 
 class AuthService {
@@ -65,10 +65,12 @@ class AuthService {
 
       MyUser? myUser = _getUserFromFirebase(userCredential.user);
 
-      FirebaseDatabase.instance
-          .ref('users/${userCredential.user!.uid}')
-          .set(myUser?.toMap());
-      return _getUserFromFirebase(userCredential.user);
+      CollectionReference users =
+          FirebaseFirestore.instance.collection('users');
+
+      await users.doc(myUser?.uid).set(myUser?.toMap());
+
+      return myUser;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('[ERROR] Register: The password provided is too weak.');

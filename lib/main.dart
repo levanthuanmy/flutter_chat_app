@@ -71,10 +71,6 @@ class _AppContainerState extends State<AppContainer> {
     final DatabaseReference userRef = database.child('/users/${user?.uid}');
     Future<DatabaseEvent> futureUserEvent = userRef.once();
 
-    CollectionReference users = FirebaseFirestore.instance.collection('users');
-
-    users.add({'name': 'test'});
-
     return FutureBuilder(
       future: futureUserEvent,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
