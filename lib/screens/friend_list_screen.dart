@@ -32,20 +32,28 @@ class _FriendListScreenState extends State<FriendListScreen> {
     return FutureBuilder(
       future: futureFriendsListEvent,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        DatabaseEvent friendsList = snapshot.data;
-        print(friendsList.snapshot.value);
+        if (snapshot.hasData) {
+          DatabaseEvent friendsList = snapshot.data;
+          print(friendsList.snapshot.value);
 
-        return SafeArea(
-          child: Column(
-            children: [
-              const Padding(
-                padding: EdgeInsets.all(0),
-                child: SearchBar(),
-              ),
-              FriendList(),
-            ],
-          ),
-        );
+          return SafeArea(
+            child: Column(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.all(0),
+                  child: SearchBar(),
+                ),
+                FriendList(),
+              ],
+            ),
+          );
+        } else if (snapshot.hasError) {
+          return const Text('Error');
+        } else {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
       },
     );
   }

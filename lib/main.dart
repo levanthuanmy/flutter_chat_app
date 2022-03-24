@@ -10,6 +10,7 @@ import 'package:flutter_chat_app/screens/home_screen.dart';
 import 'package:flutter_chat_app/screens/wrapper.dart';
 import 'package:flutter_chat_app/services/auth.dart';
 import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'constants/ui_constant.dart';
 
@@ -69,6 +70,10 @@ class _AppContainerState extends State<AppContainer> {
     final MyUser? user = Provider.of<MyUser?>(context);
     final DatabaseReference userRef = database.child('/users/${user?.uid}');
     Future<DatabaseEvent> futureUserEvent = userRef.once();
+
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+    users.add({'name': 'test'});
 
     return FutureBuilder(
       future: futureUserEvent,
