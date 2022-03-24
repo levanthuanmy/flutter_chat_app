@@ -9,6 +9,7 @@ import 'package:flutter_chat_app/screens/friend_list_screen.dart';
 import 'package:flutter_chat_app/screens/home_screen.dart';
 import 'package:flutter_chat_app/screens/wrapper.dart';
 import 'package:flutter_chat_app/services/auth.dart';
+import 'package:flutter_chat_app/services/chat_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -22,24 +23,34 @@ void main() async {
 
 // ignore: use_key_in_widget_constructors
 class MyApp extends StatelessWidget {
+  final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+
   @override
   Widget build(BuildContext context) {
     return StreamProvider<MyUser?>.value(
       value: AuthService().user,
       initialData: null,
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: UIConstant.createMaterialColor(UIConstant.primary),
+      child: MultiProvider(
+        providers: [
+          Provider<ChatProvider>(
+            create: (context) =>
+                ChatProvider(firebaseFirestore: firebaseFirestore),
+          )
+        ],
+        child: MaterialApp(
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            primarySwatch: UIConstant.createMaterialColor(UIConstant.primary),
+          ),
+          debugShowCheckedModeBanner: false,
+          routes: {
+            "/signin": (context) => const SignInScreen(),
+            "/signup": (context) => const SignUpScreen(),
+            "/home": (context) => const HomeScreen(),
+            "/friends": (context) => const FriendListScreen()
+          },
+          home: const Wrapper(),
         ),
-        debugShowCheckedModeBanner: false,
-        routes: {
-          "/signin": (context) => const SignInScreen(),
-          "/signup": (context) => const SignUpScreen(),
-          "/home": (context) => const HomeScreen(),
-          "/friends": (context) => const FriendListScreen()
-        },
-        home: const Wrapper(),
       ),
     );
   }
@@ -70,6 +81,8 @@ class _AppContainerState extends State<AppContainer> {
     final MyUser? user = Provider.of<MyUser?>(context);
     final DatabaseReference userRef = database.child('/users/${user?.uid}');
     Future<DatabaseEvent> futureUserEvent = userRef.once();
+
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
 
     return FutureBuilder(
       future: futureUserEvent,

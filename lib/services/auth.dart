@@ -5,6 +5,10 @@ import 'package:flutter_chat_app/models/my_user.dart';
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  String? getUserId() {
+    return _auth.currentUser?.uid;
+  }
+
   // convert Firebase User to MyUser
   MyUser? _getUserFromFirebase(User? fbUser) {
     if (fbUser != null) {
