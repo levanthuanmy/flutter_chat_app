@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_chat_app/models/my_user.dart';
 
 class AuthService {
@@ -8,7 +9,7 @@ class AuthService {
   MyUser? _getUserFromFirebase(User? fbUser) {
     if (fbUser != null) {
       return MyUser(
-        id: fbUser.uid,
+        uid: fbUser.uid,
         name: fbUser.displayName ?? "",
         email: fbUser.email ?? "",
         avatar: fbUser.photoURL,
@@ -61,6 +62,12 @@ class AuthService {
         email: email,
         password: password,
       );
+
+      MyUser? myUser = _getUserFromFirebase(userCredential.user);
+
+      FirebaseDatabase.instance
+          .ref('users/${userCredential.user!.uid}')
+          .set(myUser?.toMap());
       return _getUserFromFirebase(userCredential.user);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {

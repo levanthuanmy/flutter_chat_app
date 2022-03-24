@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/common/bottom_navigation.dart';
 import 'package:flutter_chat_app/models/my_user.dart';
@@ -37,24 +38,8 @@ class MyApp extends StatelessWidget {
           "/home": (context) => const HomeScreen(),
           "/friends": (context) => const FriendListScreen()
         },
-        home: Wrapper(),
+        home: const Wrapper(),
       ),
-      // FutureBuilder(
-      //   future: Firebase.initializeApp(),
-      //   builder: (BuildContext context, AsyncSnapshot snapshot) {
-      //     if (snapshot.hasError) {
-      //       debugPrint('[ERROR] ${snapshot.error.toString()}');
-      //       return const Text('Something went wrong!');
-      //     } else if (snapshot.connectionState == ConnectionState.done) {
-      //       // return const AppContainer();
-      //       return const Wrapper();
-      //     } else {
-      //       return const Center(
-      //         child: CircularProgressIndicator(),
-      //       );
-      //     }
-      //   },
-      // )),
     );
   }
 }
@@ -67,7 +52,10 @@ class AppContainer extends StatefulWidget {
 }
 
 class _AppContainerState extends State<AppContainer> {
+  DatabaseReference database = FirebaseDatabase.instance.ref();
+
   int currentIndex = 0;
+
   static const List<Widget> _widgetOptions = [HomeScreen(), FriendListScreen()];
 
   void _onItemTapped(int index) {
@@ -78,13 +66,35 @@ class _AppContainerState extends State<AppContainer> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: UIConstant.white,
-      body: _widgetOptions.elementAt(currentIndex),
-      bottomNavigationBar: CustomBottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: _onItemTapped,
-      ),
+    final MyUser? user = Provider.of<MyUser?>(context);
+    final DatabaseReference userRef = database.child('/users/${user?.uid}');
+    Future<DatabaseEvent> futureUserEvent = userRef.once();
+
+    return FutureBuilder(
+      future: futureUserEvent,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          DatabaseEvent userEvent = snapshot.data;
+          print(
+            'extend user data from realtime database: ${snapshot.data.snapshot.value}',
+          );
+
+          return Scaffold(
+            backgroundColor: UIConstant.white,
+            body: _widgetOptions.elementAt(currentIndex),
+            bottomNavigationBar: CustomBottomNavigationBar(
+              currentIndex: currentIndex,
+              onTap: _onItemTapped,
+            ),
+          );
+        }
+        if (snapshot.hasError) {
+          return const Text("Error");
+        }
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
     );
   }
 }

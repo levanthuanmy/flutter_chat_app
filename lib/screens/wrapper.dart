@@ -10,12 +10,14 @@ class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final MyUser? user = Provider.of<MyUser?>(context);
-    print(user);
+    print(user?.email);
 
-    if (user == null) {
-      return Authenticate();
+    if (user == null || user.uid.isEmpty) {
+      print("need auth");
+      return const Authenticate();
     } else {
-      return AppContainer();
+      print("auth success");
+      return const AppContainer();
     }
   }
 }

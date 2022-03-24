@@ -106,7 +106,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     MyUser? res = await _authService.register(
                         mailController.text, passwordController.text);
                     if (res != null) {
-                      print('Signed up success: ${res.id}');
+                      print('Signed up success: ${res.uid}');
                     }
                   }),
               Row(

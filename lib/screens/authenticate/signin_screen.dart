@@ -57,7 +57,7 @@ class _SignInScreenState extends State<SignInScreen> {
         await _authService.signIn(mailController.text, passwordController.text);
 
     if (res != null) {
-      print('Signed in success: ${res.id}');
+      print('Signed in success: ${res.uid}');
     } else {
       print('Sign in fail');
     }

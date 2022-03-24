@@ -10,7 +10,7 @@ class MessagesList extends StatelessWidget {
   final List<MessageDTO> messagesList = [
     MessageDTO.create(
         user: MyUser(
-            id: "1",
+            uid: "1",
             name: "Naruto Uzumaki",
             email: "a",
             avatar:
@@ -18,7 +18,7 @@ class MessagesList extends StatelessWidget {
         message: "Mã hóa cửu vỹ bằng base64"),
     MessageDTO.create(
         user: MyUser(
-            id: "1",
+            uid: "1",
             name: "Naruto Uzumaki",
             email: "a",
             avatar:
@@ -26,7 +26,7 @@ class MessagesList extends StatelessWidget {
         message: "Mã hóa cửu vỹ bằng sha256"),
     MessageDTO.create(
         user: MyUser(
-            id: "3",
+            uid: "3",
             name: "Naruto Uzumaki",
             email: "a",
             avatar:
@@ -34,7 +34,7 @@ class MessagesList extends StatelessWidget {
         message: "Mã hóa cửu vỹ bằng hex"),
     MessageDTO.create(
         user: MyUser(
-            id: "3",
+            uid: "3",
             name: "Naruto Uzumaki",
             email: "a",
             avatar:
@@ -42,7 +42,7 @@ class MessagesList extends StatelessWidget {
         message: "Mã hóa cửu vỹ bằng hex"),
     MessageDTO.create(
         user: MyUser(
-            id: "3",
+            uid: "3",
             name: "Naruto Uzumaki",
             email: "a",
             avatar:
@@ -50,7 +50,7 @@ class MessagesList extends StatelessWidget {
         message: "Mã hóa cửu vỹ bằng hex"),
     MessageDTO.create(
         user: MyUser(
-            id: "1",
+            uid: "1",
             name: "Naruto Uzumaki",
             email: "a",
             avatar:
@@ -68,13 +68,14 @@ class MessagesList extends StatelessWidget {
       itemBuilder: (context, index) {
         bool isPreviousUser = false;
         if (index > 0) {
-          if (messagesList[index - 1].user.id == messagesList[index].user.id) {
+          if (messagesList[index - 1].user.uid ==
+              messagesList[index].user.uid) {
             isPreviousUser = true;
           }
         }
         return MessageCard(
           message: messagesList[index],
-          isUserSent: messagesList[index].user.id == fakeUserId,
+          isUserSent: messagesList[index].user.uid == fakeUserId,
           isPreviousUser: isPreviousUser,
         );
       },
