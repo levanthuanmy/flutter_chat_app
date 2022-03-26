@@ -29,7 +29,7 @@ class MessageDTO {
       result += "0";
     }
     result += minute.toString();
-
+    print("result time $result");
     return result;
   }
 }

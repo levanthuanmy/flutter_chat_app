@@ -20,12 +20,27 @@ class MyUser {
     this.friendsList = const [],
   });
 
+  MyUser.setInformation({
+    required this.uid,
+    required this.name,
+    required this.email,
+    required this.avatar,
+  });
+
   Map<String, Object> toMap() {
     return {
       "uid": uid,
       "name": name,
       "avatar": avatar ?? "",
       "friendsList": friendsList,
+    };
+  }
+
+  Map<String, Object> getInformationJson() {
+    return {
+      "uid": uid,
+      "name": name,
+      "avatar": avatar ?? "",
     };
   }
 }

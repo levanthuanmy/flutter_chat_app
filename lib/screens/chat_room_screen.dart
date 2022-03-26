@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/constants/ui_constant.dart';
+import 'package:flutter_chat_app/services/chat_provider.dart';
 import 'package:flutter_chat_app/widgets/chat_room/message_field.dart';
 import 'package:flutter_chat_app/widgets/chat_room/messages_list.dart';
+import 'package:provider/provider.dart';
 
 class ChatRoomScreen extends StatefulWidget {
   const ChatRoomScreen({Key? key}) : super(key: key);
@@ -14,6 +17,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
   final TextEditingController chatController = TextEditingController();
 
   String get message => chatController.text;
+  late ChatProvider _chatProvider;
 
   @override
   void initState() {
@@ -22,6 +26,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
     chatController.addListener(() {
       setState(() {});
     });
+    _chatProvider = context.read<ChatProvider>();
   }
 
   @override

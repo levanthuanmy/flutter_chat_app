@@ -1,11 +1,24 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/constants/ui_constant.dart';
+import 'package:flutter_chat_app/models/chat_room_dto.dart';
+import 'package:flutter_chat_app/models/message_dto.dart';
+import 'package:flutter_chat_app/models/my_user.dart';
 import 'package:flutter_chat_app/screens/chat_room_screen.dart';
 
 class ChatterCard extends StatelessWidget {
   final bool isRead;
-  const ChatterCard({Key? key, required this.isRead}) : super(key: key);
+  final QueryDocumentSnapshot<ChatRoomDTO> chatRoomDTO;
+  final Future<QuerySnapshot> lastMessageQuery;
+  final MessageDTO lastMessage;
+  const ChatterCard(
+      {Key? key,
+      required this.isRead,
+      required this.chatRoomDTO,
+      required this.lastMessageQuery,
+      required this.lastMessage})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +45,10 @@ class ChatterCard extends StatelessWidget {
                 shape: BoxShape.circle,
               ),
               child: Image.network(
-                "https://gamek.mediacdn.vn/thumb_w/640/133514250583805952/2020/7/11/narutossagemode-15944657133061535033027.png",
+                lastMessage.user.avatar?.isNotEmpty == true &&
+                        lastMessage.user.avatar != null
+                    ? lastMessage.user.avatar!
+                    : "https://gamek.mediacdn.vn/thumb_w/640/133514250583805952/2020/7/11/narutossagemode-15944657133061535033027.png",
                 fit: BoxFit.cover,
               ),
             ),
@@ -55,13 +71,14 @@ class ChatterCard extends StatelessWidget {
                   const SizedBox(
                     height: 6,
                   ),
-                  Text(
-                      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type ",
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontWeight:
-                            isRead ? FontWeight.normal : FontWeight.bold,
-                      ))
+                  // Text(
+                  //     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type ",
+                  //     overflow: TextOverflow.ellipsis,
+                  //     style: TextStyle(
+                  //       fontWeight:
+                  //           isRead ? FontWeight.normal : FontWeight.bold,
+                  //     ))
+                  buildLastMsg()
                 ],
               ),
             ),
@@ -72,7 +89,7 @@ class ChatterCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text("13:10",
+                Text(lastMessage?.getTime() ?? "",
                     style: TextStyle(
                       fontWeight: isRead ? FontWeight.normal : FontWeight.bold,
                     )),
@@ -93,5 +110,35 @@ class ChatterCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget buildLastMsg() {
+    debugPrint("Do");
+    return Text(lastMessage?.message ?? "",
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(
+          fontWeight: isRead ? FontWeight.normal : FontWeight.bold,
+        ));
+    // return FutureBuilder(
+    //     future: lastMessageQuery,
+    //     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+    //       if (snapshot.hasData) {
+    //         return Text(lastMessage?.message ?? "",
+    //             overflow: TextOverflow.ellipsis,
+    //             style: TextStyle(
+    //               fontWeight: isRead ? FontWeight.normal : FontWeight.bold,
+    //             ));
+    //       }
+    //       if (snapshot.hasError) {
+    //         debugPrint("Get last msg error ${snapshot.error}");
+    //         return const Text("Error");
+    //       } else {
+    //         return Center(
+    //           child: CircularProgressIndicator(
+    //             color: UIConstant.primary,
+    //           ),
+    //         );
+    //       }
+    //     });
   }
 }

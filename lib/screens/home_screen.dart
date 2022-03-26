@@ -5,6 +5,7 @@ import 'package:flutter_chat_app/common/bottom_navigation.dart';
 import 'package:flutter_chat_app/common/search_bar.dart';
 import 'package:flutter_chat_app/constants/constants.dart';
 import 'package:flutter_chat_app/constants/ui_constant.dart';
+import 'package:flutter_chat_app/models/chat_room_dto.dart';
 import 'package:flutter_chat_app/services/auth.dart';
 import 'package:flutter_chat_app/services/chat_provider.dart';
 import 'package:provider/provider.dart';
@@ -21,8 +22,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final AuthService _authService = AuthService();
   late ChatProvider _chatProvider;
-  final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-
+  String userUID = AuthService().getUserId()!;
   int _limit = 20;
   int _limitIncrement = 20;
   @override
@@ -45,19 +45,28 @@ class _HomeScreenState extends State<HomeScreen> {
           },
           child: const Text('Sign out'),
         ),
-        StreamBuilder<QuerySnapshot>(
-            stream: firebaseFirestore
-                .collection("users")
-                // .where("users", arrayContains: userUID)
-                // .orderBy("lastActive", descending: true)
-                // .limit(limit)
-                .snapshots(),
-            builder:
-                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              debugPrint("ID: ${AuthService().getUserId()}");
+        StreamBuilder<QuerySnapshot<ChatRoomDTO>>(
+            stream:
+                _chatProvider.getChatRooms(AuthService().getUserId()!, _limit),
+            builder: (BuildContext context,
+                AsyncSnapshot<QuerySnapshot<ChatRoomDTO>> snapshot) {
               debugPrint("snapshot: ${snapshot}");
+              List<Map<String, Object>> data = [];
+
               if (snapshot.hasData) {
-                return ChatterList();
+                debugPrint("data ${snapshot.data!.docs}");
+                for (var i in snapshot.data!.docs) {
+                  print("ID ${i.id}");
+                  print("User ${i['users']}");
+                  var lastMessage = _chatProvider.getLastMessage(i.id);
+                  data.add({"lastMessage": lastMessage, "chatRoom": i});
+                  debugPrint("Last msg $lastMessage");
+                }
+
+                return ChatterList(
+                  querySnapshots: snapshot.data!.docs,
+                  chatRooms: data,
+                );
               } else if (snapshot.hasError) {
                 debugPrint("${snapshot.error}");
                 return Text("Error");

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/common/avatar.dart';
 import 'package:flutter_chat_app/constants/ui_constant.dart';
-import 'package:flutter_chat_app/models/message-dto.dart';
+import 'package:flutter_chat_app/models/message_dto.dart';
 import 'package:flutter_chat_app/models/my_user.dart';
 
 class MessageCard extends StatelessWidget {

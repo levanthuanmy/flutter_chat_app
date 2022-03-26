@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_chat_app/models/message-dto.dart';
+import 'package:flutter_chat_app/models/message_dto.dart';
 import 'package:flutter_chat_app/widgets/chat_room/message_card.dart';
 
 import '../../models/my_user.dart';
