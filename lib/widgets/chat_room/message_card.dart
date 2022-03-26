@@ -20,10 +20,11 @@ class MessageCard extends StatelessWidget {
     return Container(
         margin:
             EdgeInsets.only(top: isPreviousUser ? 4 : 16, right: 8, left: 8),
-        child: isUserSent ? buildUserSent(context) : buildPartnerSent(context));
+        child:
+            isUserSent ? buildCurrenUserSent(context) : buildPeerSent(context));
   }
 
-  Widget buildUserSent(BuildContext context) {
+  Widget buildCurrenUserSent(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -50,11 +51,11 @@ class MessageCard extends StatelessWidget {
     );
   }
 
-  Widget buildPartnerSent(BuildContext context) {
+  Widget buildPeerSent(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Avatar(height: 32, width: 32),
+        const Avatar(height: 32, width: 32),
         const SizedBox(
           width: 8,
         ),

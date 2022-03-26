@@ -1,31 +1,34 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/constants/ui_constant.dart';
-import 'package:flutter_chat_app/models/chat_room_dto.dart';
 import 'package:flutter_chat_app/models/message_dto.dart';
 import 'package:flutter_chat_app/models/my_user.dart';
 import 'package:flutter_chat_app/screens/chat_room_screen.dart';
 
 class ChatterCard extends StatelessWidget {
   final bool isRead;
-  final QueryDocumentSnapshot<ChatRoomDTO> chatRoomDTO;
+  final MyUser peer;
   final Future<QuerySnapshot> lastMessageQuery;
   final MessageDTO lastMessage;
-  const ChatterCard(
+  final String chatRoomId;
+  ChatterCard(
       {Key? key,
       required this.isRead,
-      required this.chatRoomDTO,
+      required this.chatRoomId,
       required this.lastMessageQuery,
-      required this.lastMessage})
+      required this.lastMessage,
+      required this.peer})
       : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => ChatRoomScreen()));
+            context,
+            MaterialPageRoute(
+                builder: (context) => ChatRoomScreen(
+                      chatRoomID: chatRoomId,
+                    )));
       },
       style: TextButton.styleFrom(
           primary: UIConstant.black,
@@ -45,9 +48,8 @@ class ChatterCard extends StatelessWidget {
                 shape: BoxShape.circle,
               ),
               child: Image.network(
-                lastMessage.user.avatar?.isNotEmpty == true &&
-                        lastMessage.user.avatar != null
-                    ? lastMessage.user.avatar!
+                peer.avatar?.isNotEmpty == true && peer.avatar != null
+                    ? peer.avatar!
                     : "https://gamek.mediacdn.vn/thumb_w/640/133514250583805952/2020/7/11/narutossagemode-15944657133061535033027.png",
                 fit: BoxFit.cover,
               ),
@@ -62,7 +64,7 @@ class ChatterCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "John Dove",
+                    peer.name.isNotEmpty == true ? peer.name : peer.email,
                     style: TextStyle(
                       fontWeight: isRead ? FontWeight.normal : FontWeight.bold,
                       fontSize: 18,
@@ -89,7 +91,7 @@ class ChatterCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(lastMessage?.getTime() ?? "",
+                Text(lastMessage.getTime(),
                     style: TextStyle(
                       fontWeight: isRead ? FontWeight.normal : FontWeight.bold,
                     )),
@@ -113,8 +115,9 @@ class ChatterCard extends StatelessWidget {
   }
 
   Widget buildLastMsg() {
-    debugPrint("Do");
-    return Text(lastMessage?.message ?? "",
+    String message = peer.uid != lastMessage.user.uid ? "You: " : "";
+    message += lastMessage.message;
+    return Text(message,
         overflow: TextOverflow.ellipsis,
         style: TextStyle(
           fontWeight: isRead ? FontWeight.normal : FontWeight.bold,

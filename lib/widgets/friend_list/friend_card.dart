@@ -25,7 +25,9 @@ class FriendCard extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const ChatRoomScreen(),
+                  builder: (context) => const ChatRoomScreen(
+                    chatRoomID: "",
+                  ),
                 ),
               );
             },

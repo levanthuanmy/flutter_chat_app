@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_chat_app/models/chat_room_dto.dart';
+import 'package:flutter_chat_app/models/message_dto.dart';
 
 class ChatProvider {
   final FirebaseFirestore firebaseFirestore;
@@ -31,7 +32,40 @@ class ChatProvider {
         .orderBy("createdAt", descending: true)
         .limit(1)
         .get();
+    return result;
+  }
+
+  Future<DocumentSnapshot> getChatRoom(String chatRoomID) {
+    debugPrint("userUID $chatRoomID");
+    var result =
+        firebaseFirestore.collection("chatRooms").doc(chatRoomID).get();
     debugPrint("res $result");
     return result;
+  }
+
+  Stream<QuerySnapshot> getMessageStream(String chatRoomID, int limit) {
+    var result = firebaseFirestore
+        .collection("messages")
+        .doc(chatRoomID)
+        .collection("messages")
+        // .where("users.$userUID.uid", isEqualTo: userUID)
+        // .orderBy("lastActive", descending: true)
+        .limit(limit)
+        .snapshots();
+    debugPrint("res $result");
+    return result;
+  }
+
+  Future<void> sendMessage(String chatRoomID, MessageDTO msg) async {
+    var result = firebaseFirestore
+        .collection("messages")
+        .doc(chatRoomID)
+        .collection("messages");
+    var json = msg.toJSON();
+    debugPrint("json msg $json");
+    await result.add(msg.toJSON());
+
+    debugPrint("res send message $result");
+    // return result;
   }
 }

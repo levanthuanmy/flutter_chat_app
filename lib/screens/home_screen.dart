@@ -50,17 +50,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 _chatProvider.getChatRooms(AuthService().getUserId()!, _limit),
             builder: (BuildContext context,
                 AsyncSnapshot<QuerySnapshot<ChatRoomDTO>> snapshot) {
-              debugPrint("snapshot: ${snapshot}");
               List<Map<String, Object>> data = [];
 
               if (snapshot.hasData) {
                 debugPrint("data ${snapshot.data!.docs}");
                 for (var i in snapshot.data!.docs) {
-                  print("ID ${i.id}");
-                  print("User ${i['users']}");
+                  debugPrint("ID ${i.id}");
+                  debugPrint("User ${i['users']}");
                   var lastMessage = _chatProvider.getLastMessage(i.id);
-                  data.add({"lastMessage": lastMessage, "chatRoom": i});
                   debugPrint("Last msg $lastMessage");
+                  data.add({"lastMessage": lastMessage, "chatRoom": i});
                 }
 
                 return ChatterList(

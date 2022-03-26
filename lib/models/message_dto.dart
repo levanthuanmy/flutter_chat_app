@@ -1,9 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_chat_app/models/my_user.dart';
 
 class MessageDTO {
   late String id;
-  MyUser user;
-  String message;
+  late MyUser user;
+  late String message;
   late DateTime createdAt;
   MessageDTO({
     required this.id,
@@ -14,6 +15,21 @@ class MessageDTO {
 
   MessageDTO.create({required this.user, required this.message}) {
     createdAt = DateTime.now();
+  }
+
+  MessageDTO.convertFromSnapshot(QueryDocumentSnapshot<Object?> snapshot) {
+    id = snapshot.id;
+
+    var mapUser = snapshot.get("user");
+    user = MyUser(
+        avatar: mapUser['avatar'] ?? "",
+        email: mapUser['email'] ?? "",
+        name: mapUser['name'] ?? "",
+        uid: mapUser['uid'] ?? "");
+    message = snapshot.get('message');
+
+    createdAt = DateTime.fromMillisecondsSinceEpoch(
+        int.parse(snapshot.get('createdAt')));
   }
 
   String getTime() {
@@ -29,7 +45,14 @@ class MessageDTO {
       result += "0";
     }
     result += minute.toString();
-    print("result time $result");
     return result;
+  }
+
+  Map<String, dynamic> toJSON() {
+    return {
+      "user": user.toMap(),
+      "message": message,
+      "createdAt": createdAt.millisecondsSinceEpoch.toString()
+    };
   }
 }

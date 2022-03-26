@@ -9,6 +9,10 @@ class AuthService {
     return _auth.currentUser?.uid;
   }
 
+  MyUser? get currentUser {
+    return _getUserFromFirebase(_auth.currentUser);
+  }
+
   // convert Firebase User to MyUser
   MyUser? _getUserFromFirebase(User? fbUser) {
     if (fbUser != null) {

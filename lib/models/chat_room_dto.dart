@@ -17,7 +17,17 @@ class ChatRoomDTO {
 
   ChatRoomDTO.fromJSON(Map<String, Object?> json) {
     id = json['id']! as String;
-    users = json['users']! as List<MyUser>;
+    var mapUsers = json['users']! as Map<String, dynamic>;
+    users = [];
+
+    mapUsers.forEach(((uid, value) {
+      MyUser user = MyUser(
+          avatar: value['avatar'] ?? "",
+          email: value['email'] ?? "",
+          name: value['name'] ?? "",
+          uid: value['uid'] ?? "");
+      users.add(user);
+    }));
     messages = json['messages']! as List<MessageDTO>;
     lastActive = DateTime.parse(json['id']! as String);
   }

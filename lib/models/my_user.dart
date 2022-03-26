@@ -32,7 +32,8 @@ class MyUser {
       "uid": uid,
       "name": name,
       "avatar": avatar ?? "",
-      "friendsList": friendsList,
+      // "friendsList": friendsList,
+      "email": email
     };
   }
 
