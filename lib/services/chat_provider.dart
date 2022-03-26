@@ -49,9 +49,7 @@ class ChatProvider {
         .doc(chatRoomID)
         .collection("messages")
         .orderBy("createdAt", descending: true)
-        // .where("users.$userUID.uid", isEqualTo: userUID)
-        // .orderBy("lastActive", descending: true)
-        // .limit(limit)
+        .limit(limit)
         .snapshots();
     debugPrint("res $result");
     return result;

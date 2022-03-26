@@ -8,10 +8,12 @@ class MessageCard extends StatelessWidget {
   final MessageDTO message;
   bool isUserSent; // nếu message thuộc về user
   bool isPreviousUser; // nếu là người cuối cùng nhắn lần trước
+  bool isLastMessageOfUser; // nếu tin nhắn đó dừng qua sang người khác
   MessageCard(
       {Key? key,
       required this.message,
       required this.isUserSent,
+      required this.isLastMessageOfUser,
       required this.isPreviousUser})
       : super(key: key);
 
@@ -40,10 +42,12 @@ class MessageCard extends StatelessWidget {
               const SizedBox(
                 height: 8,
               ),
-              Text(
-                message.getTime(),
-                style: TextStyle(color: UIConstant.tertiary),
-              )
+              isLastMessageOfUser
+                  ? Text(
+                      message.getTime(),
+                      style: TextStyle(color: UIConstant.tertiary),
+                    )
+                  : const SizedBox()
             ],
           ),
         ),

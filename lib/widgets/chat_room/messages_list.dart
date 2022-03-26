@@ -66,16 +66,6 @@ class MessagesList extends StatelessWidget {
       required this.messagesList,
       required this.listScrollController})
       : super(key: key);
-  // _scrollListener() {
-  //   if (controller.offset >=
-  //           controller.position.maxScrollExtent &&
-  //       !controller.position.outOfRange &&
-  //       _limit <= listMessage.length) {
-  //     setState(() {
-  //       _limit += _limitIncrement;
-  //     });
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +74,6 @@ class MessagesList extends StatelessWidget {
     //   curve: Curves.easeOut,
     //   duration: const Duration(milliseconds: 300),
     // );
-    debugPrint("msg List $messagesList");
     return Expanded(
         child: ListView.builder(
       itemCount: messagesList.length,
@@ -93,6 +82,8 @@ class MessagesList extends StatelessWidget {
       reverse: true,
       itemBuilder: (context, index) {
         bool isPreviousUser = false;
+        // check if user A sends last msg and take turn to user B => if true, show the time sent
+        bool isLastMessageOfUser = true;
         if (index < messagesList.length - 1) {
           if (messagesList[index + 1].user.uid ==
               messagesList[index].user.uid) {
@@ -104,10 +95,18 @@ class MessagesList extends StatelessWidget {
             isPreviousUser = true;
           }
         }
+
+        if (index > 0) {
+          if (messagesList[index].user.uid ==
+              messagesList[index - 1].user.uid) {
+            isLastMessageOfUser = false;
+          }
+        }
         return MessageCard(
           message: messagesList[index],
           isUserSent: messagesList[index].user.uid == AuthService().getUserId(),
           isPreviousUser: isPreviousUser,
+          isLastMessageOfUser: isLastMessageOfUser,
         );
       },
     ));

@@ -24,8 +24,12 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
   String get message => chatController.text;
   ScrollController listScrollController = ScrollController();
   late ChatProvider _chatProvider;
-
+  List<MessageDTO> messages = [];
   String get chatRoomID => widget.chatRoomID;
+  int _limit = 20;
+  final int _limitIncrement = 20;
+  List<QueryDocumentSnapshot> listMessage = [];
+  bool isLoadingMoreMessages = false;
   @override
   void initState() {
     // TODO: implement initState
@@ -34,6 +38,21 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
     //   setState(() {});
     // });
     _chatProvider = context.read<ChatProvider>();
+    listScrollController.addListener(_scrollListener);
+  }
+
+  _scrollListener() {
+    if (listScrollController.offset >=
+            listScrollController.position.maxScrollExtent &&
+        !listScrollController.position.outOfRange &&
+        _limit <= listMessage.length) {
+      debugPrint("scroll");
+      setState(() {
+        _limit += _limitIncrement;
+        // isLoadingMoreMessages = true;
+        // messages = [];
+      });
+    }
   }
 
   MyUser getPeer(DocumentSnapshot chatRoom) {
@@ -86,14 +105,22 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                         )
                       ],
                     ),
+                    isLoadingMoreMessages
+                        ? Center(
+                            child: CircularProgressIndicator(
+                              color: UIConstant.primary,
+                            ),
+                          )
+                        : const SizedBox(),
                     StreamBuilder(
                         stream: _chatProvider.getMessageStream(
-                            widget.chatRoomID, 20),
+                            widget.chatRoomID, _limit),
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot> snapshot) {
-                          List<MessageDTO> messages = [];
+                          List<MessageDTO> _messages = [];
 
                           if (snapshot.hasData) {
+                            listMessage = snapshot.data!.docs;
                             for (var i in snapshot.data!.docs) {
                               // debugPrint("MSG ${i.get("message")}");
                               // debugPrint("MSG ${i.get("user")}");
@@ -101,13 +128,13 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
 
                               MessageDTO message =
                                   MessageDTO.convertFromSnapshot(i);
-                              messages.add(message);
+                              _messages.add(message);
                             }
                           }
 
                           return MessagesList(
                               listScrollController: listScrollController,
-                              messagesList: messages);
+                              messagesList: _messages);
                         }),
                     // Message text field
                     MessageField(
