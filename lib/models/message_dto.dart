@@ -28,8 +28,7 @@ class MessageDTO {
         uid: mapUser['uid'] ?? "");
     message = snapshot.get('message');
 
-    createdAt = DateTime.fromMillisecondsSinceEpoch(
-        int.parse(snapshot.get('createdAt')));
+    createdAt = DateTime.fromMillisecondsSinceEpoch(snapshot.get('createdAt'));
   }
 
   String getTime() {
@@ -52,7 +51,7 @@ class MessageDTO {
     return {
       "user": user.toMap(),
       "message": message,
-      "createdAt": createdAt.millisecondsSinceEpoch.toString()
+      "createdAt": createdAt.millisecondsSinceEpoch
     };
   }
 }

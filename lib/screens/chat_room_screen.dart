@@ -21,8 +21,8 @@ class ChatRoomScreen extends StatefulWidget {
 
 class _ChatRoomScreenState extends State<ChatRoomScreen> {
   final TextEditingController chatController = TextEditingController();
-
   String get message => chatController.text;
+  ScrollController listScrollController = ScrollController();
   late ChatProvider _chatProvider;
 
   String get chatRoomID => widget.chatRoomID;
@@ -104,8 +104,10 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                               messages.add(message);
                             }
                           }
-                          print("Messages ${messages}");
-                          return MessagesList(messagesList: messages);
+
+                          return MessagesList(
+                              listScrollController: listScrollController,
+                              messagesList: messages);
                         }),
                     // Message text field
                     MessageField(
@@ -128,5 +130,6 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
 
   void handleSendMessage(MessageDTO newMessage) {
     _chatProvider.sendMessage(chatRoomID, newMessage);
+    chatController.text = "";
   }
 }

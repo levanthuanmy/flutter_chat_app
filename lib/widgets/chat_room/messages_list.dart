@@ -60,18 +60,47 @@ class MessagesList extends StatelessWidget {
   // ];
   final List<MessageDTO> messagesList;
 
-  MessagesList({Key? key, required this.messagesList}) : super(key: key);
+  final ScrollController listScrollController;
+  MessagesList(
+      {Key? key,
+      required this.messagesList,
+      required this.listScrollController})
+      : super(key: key);
+  // _scrollListener() {
+  //   if (controller.offset >=
+  //           controller.position.maxScrollExtent &&
+  //       !controller.position.outOfRange &&
+  //       _limit <= listMessage.length) {
+  //     setState(() {
+  //       _limit += _limitIncrement;
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
+    // controller.animateTo(
+    //   controller.position.maxScrollExtent,
+    //   curve: Curves.easeOut,
+    //   duration: const Duration(milliseconds: 300),
+    // );
+    debugPrint("msg List $messagesList");
     return Expanded(
         child: ListView.builder(
       itemCount: messagesList.length,
+      controller: listScrollController,
+      physics: const BouncingScrollPhysics(),
+      reverse: true,
       itemBuilder: (context, index) {
         bool isPreviousUser = false;
-        if (index > 0) {
-          if (messagesList[index - 1].user.uid ==
+        if (index < messagesList.length - 1) {
+          if (messagesList[index + 1].user.uid ==
               messagesList[index].user.uid) {
+            isPreviousUser = true;
+          }
+        } else {
+          if (messagesList[index].user.uid ==
+              messagesList[index - 1].user.uid) {
             isPreviousUser = true;
           }
         }

@@ -48,9 +48,10 @@ class ChatProvider {
         .collection("messages")
         .doc(chatRoomID)
         .collection("messages")
+        .orderBy("createdAt", descending: true)
         // .where("users.$userUID.uid", isEqualTo: userUID)
         // .orderBy("lastActive", descending: true)
-        .limit(limit)
+        // .limit(limit)
         .snapshots();
     debugPrint("res $result");
     return result;
@@ -65,8 +66,10 @@ class ChatProvider {
     debugPrint("json msg $json");
     await result.add(msg.toJSON());
 
-    await firebaseFirestore.collection("chatRooms").doc(chatRoomID).update(
-        {"lastActive": DateTime.now().millisecondsSinceEpoch.toString()});
+    await firebaseFirestore
+        .collection("chatRooms")
+        .doc(chatRoomID)
+        .update({"lastActive": DateTime.now().millisecondsSinceEpoch});
 
     debugPrint("res send message $result");
     // return result;

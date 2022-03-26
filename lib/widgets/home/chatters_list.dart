@@ -42,7 +42,7 @@ class ChatterList extends StatelessWidget {
                               avatar: data.get('user.avatar') ?? ""),
                           message: data.get('message'),
                           createdAt: DateTime.fromMillisecondsSinceEpoch(
-                              int.parse(data.get('createdAt'))));
+                              data.get('createdAt')));
                       debugPrint("line 46 last message $lastMessage");
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8),
