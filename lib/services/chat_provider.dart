@@ -65,6 +65,9 @@ class ChatProvider {
     debugPrint("json msg $json");
     await result.add(msg.toJSON());
 
+    await firebaseFirestore.collection("chatRooms").doc(chatRoomID).update(
+        {"lastActive": DateTime.now().millisecondsSinceEpoch.toString()});
+
     debugPrint("res send message $result");
     // return result;
   }

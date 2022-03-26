@@ -50,8 +50,6 @@ class ChatterList extends StatelessWidget {
                             isRead: true,
                             peer: getPeer(chatRooms[index]['chatRoom']
                                 as QueryDocumentSnapshot<ChatRoomDTO>),
-                            // chatRoomDTO: chatRooms[index]['chatRoom']
-                            //     as QueryDocumentSnapshot<ChatRoomDTO>,
                             chatRoomId: (chatRooms[index]['chatRoom']
                                     as QueryDocumentSnapshot<ChatRoomDTO>)
                                 .id,
