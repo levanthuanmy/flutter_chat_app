@@ -32,6 +32,10 @@ class MessageCard extends StatelessWidget {
       children: [
         Container(
           padding: const EdgeInsets.all(8),
+          constraints: BoxConstraints(
+            minWidth: 64,
+            maxWidth: MediaQuery.of(context).size.width * 0.7,
+          ),
           decoration: BoxDecoration(
               color: UIConstant.primary,
               borderRadius: BorderRadius.circular(UIConstant.borderRadius)),
@@ -69,6 +73,7 @@ class MessageCard extends StatelessWidget {
               color: UIConstant.tertiary,
               borderRadius: BorderRadius.circular(UIConstant.borderRadius)),
           constraints: BoxConstraints(
+            minWidth: 64,
             maxWidth: MediaQuery.of(context).size.width * 0.7,
           ),
           child: Column(

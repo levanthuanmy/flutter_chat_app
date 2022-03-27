@@ -52,7 +52,6 @@ class ChatProvider {
         .orderBy("createdAt", descending: true)
         .limit(limit)
         .snapshots();
-    debugPrint("res $result");
     return result;
   }
 
@@ -70,7 +69,6 @@ class ChatProvider {
         .doc(chatRoomID)
         .update({"lastActive": DateTime.now().millisecondsSinceEpoch});
 
-    debugPrint("res send message $result");
     // return result;
   }
 
@@ -87,14 +85,12 @@ class ChatProvider {
       ChatRoomDTO newChatRoom = ChatRoomDTO.create(
         users: [currentUser, peerUser],
       );
-      debugPrint("new chat room ${newChatRoom}");
-      debugPrint("JSON ${newChatRoom.createNewChatRoom()}");
+
       var newChatRoomDocument = await ref.add(newChatRoom.createNewChatRoom());
       DocumentSnapshot<Map<String, dynamic>> data =
           await newChatRoomDocument.get();
-      debugPrint("new document chat room .get() ${data}");
-      debugPrint("new document chat room .data() ${data.data()}");
 
+      firebaseFirestore.collection("messages").doc(data.id).set({});
       chatRoom = data.data() ?? {};
       chatRoom['id'] = data.id;
     } else {
@@ -102,7 +98,7 @@ class ChatProvider {
       chatRoom['id'] = resp.docs[0].id;
     }
 
-    debugPrint("find chat room $chatRoom");
+    debugPrint("find chat room result:  $chatRoom");
     return ChatRoomDTO.fromJSON(chatRoom);
   }
 }

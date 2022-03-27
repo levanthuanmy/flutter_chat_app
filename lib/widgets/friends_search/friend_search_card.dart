@@ -10,7 +10,10 @@ import '../../screens/chat_room_screen.dart';
 
 class FriendSearchCard extends StatefulWidget {
   final MyUser friend;
-  const FriendSearchCard({Key? key, required this.friend}) : super(key: key);
+  final Function setLoading;
+  const FriendSearchCard(
+      {Key? key, required this.friend, required this.setLoading})
+      : super(key: key);
 
   @override
   State<FriendSearchCard> createState() => _FriendSearchCardState();
@@ -34,18 +37,19 @@ class _FriendSearchCardState extends State<FriendSearchCard> {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () async {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) => const ChatRoomScreen(
-        //       chatRoomID: "",
-        //     ),
-        //   ),
-        // );
         var chatRoom = await _chatProvider.findChatRoom(
             AuthService().currentUser!, friend);
 
         debugPrint("${chatRoom.id}");
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ChatRoomScreen(
+              chatRoomID: chatRoom.id,
+            ),
+          ),
+        );
       },
       style: TextButton.styleFrom(
         primary: UIConstant.black,

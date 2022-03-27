@@ -72,7 +72,14 @@ class _FriendsSearchScreenState extends State<FriendsSearchScreen> {
                       ),
                     ),
                   )
-                : FriendsSearchList(listFriends: listFriends)
+                : FriendsSearchList(
+                    listFriends: listFriends,
+                    setLoading: () {
+                      setState(() {
+                        isLoading = true;
+                      });
+                    },
+                  )
           ],
         ),
       ),

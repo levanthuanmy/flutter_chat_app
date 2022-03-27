@@ -90,9 +90,11 @@ class MessagesList extends StatelessWidget {
             isPreviousUser = true;
           }
         } else {
-          if (messagesList[index].user.uid ==
-              messagesList[index - 1].user.uid) {
-            isPreviousUser = true;
+          if (index > 1) {
+            if (messagesList[index].user.uid ==
+                messagesList[index - 1].user.uid) {
+              isPreviousUser = true;
+            }
           }
         }
 

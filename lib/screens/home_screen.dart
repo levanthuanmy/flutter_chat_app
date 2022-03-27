@@ -53,12 +53,8 @@ class _HomeScreenState extends State<HomeScreen> {
               List<Map<String, Object>> data = [];
 
               if (snapshot.hasData) {
-                debugPrint("data ${snapshot.data!.docs}");
                 for (var i in snapshot.data!.docs) {
-                  debugPrint("ID ${i.id}");
-                  debugPrint("User ${i['users']}");
                   var lastMessage = _chatProvider.getLastMessage(i.id);
-                  debugPrint("Last msg $lastMessage");
                   data.add({"lastMessage": lastMessage, "chatRoom": i});
                 }
 

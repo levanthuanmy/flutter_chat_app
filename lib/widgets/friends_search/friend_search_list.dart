@@ -4,8 +4,10 @@ import 'package:flutter_chat_app/widgets/friends_search/friend_search_card.dart'
 
 class FriendsSearchList extends StatelessWidget {
   final List<MyUser> listFriends;
+  final Function setLoading;
 
-  const FriendsSearchList({Key? key, required this.listFriends})
+  const FriendsSearchList(
+      {Key? key, required this.listFriends, required this.setLoading})
       : super(key: key);
 
   @override
@@ -18,6 +20,7 @@ class FriendsSearchList extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: FriendSearchCard(
                   friend: listFriends[index],
+                  setLoading: setLoading,
                 ),
               );
             })));
