@@ -76,7 +76,7 @@ class AuthService {
       CollectionReference users =
           FirebaseFirestore.instance.collection('users');
 
-      await users.doc(myUser?.uid).set(myUser?.toMap());
+      await users.doc(myUser?.uid).set(myUser?.getInformationJson());
 
       return myUser;
     } on FirebaseAuthException catch (e) {

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -19,15 +21,34 @@ class _FriendListScreenState extends State<FriendListScreen> {
   final AuthService _authService = AuthService();
   DatabaseReference database = FirebaseDatabase.instance.ref();
 
+  Map<String, MyUser> getDataFromDynamicData(dynamic data) {
+    try {
+      return Map<String, dynamic>.from(data).map(
+        (dynamic key, dynamic value) => MapEntry(
+          key.toString(),
+          MyUser(
+            avatar: '',
+            email: value['email'],
+            name: value['name'],
+            uid: value['uid'],
+          ),
+        ),
+      );
+    } catch (e) {
+      print(e);
+      return {};
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final MyUser? user = Provider.of<MyUser?>(context);
 
-    CollectionReference usersRef =
-        FirebaseFirestore.instance.collection('users');
+    CollectionReference friendListRef =
+        FirebaseFirestore.instance.collection('friendList');
 
     return FutureBuilder<DocumentSnapshot>(
-      future: usersRef.doc(user?.uid).get(),
+      future: friendListRef.doc(user?.uid).get(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           return SafeArea(
@@ -38,8 +59,9 @@ class _FriendListScreenState extends State<FriendListScreen> {
                   child: SearchBar(),
                 ),
                 FriendList(
-                  listUserId:
-                      List<String>.from(snapshot.data!.data()['friendsList']),
+                  listFriend: getDataFromDynamicData(
+                    snapshot.data!.data(),
+                  ),
                 ),
               ],
             ),
