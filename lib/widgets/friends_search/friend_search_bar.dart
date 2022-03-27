@@ -4,7 +4,10 @@ import '../../constants/ui_constant.dart';
 
 class FriendSearchBar extends StatelessWidget {
   final TextEditingController controller;
-  const FriendSearchBar({Key? key, required this.controller}) : super(key: key);
+  final Function onSearch;
+  const FriendSearchBar(
+      {Key? key, required this.controller, required this.onSearch})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +35,10 @@ class FriendSearchBar extends StatelessWidget {
             child: TextField(
               controller: controller,
               textAlignVertical: TextAlignVertical.center,
+              textInputAction: TextInputAction.search,
+              onSubmitted: (_) {
+                onSearch();
+              },
               autofocus: true,
               decoration: InputDecoration(
                 // hintStyle: TextStyle(color: UIConstant.secondary),

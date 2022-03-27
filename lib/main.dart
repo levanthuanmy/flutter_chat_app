@@ -10,6 +10,7 @@ import 'package:flutter_chat_app/screens/home_screen.dart';
 import 'package:flutter_chat_app/screens/wrapper.dart';
 import 'package:flutter_chat_app/services/auth.dart';
 import 'package:flutter_chat_app/services/chat_provider.dart';
+import 'package:flutter_chat_app/services/friends_search_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -35,6 +36,10 @@ class MyApp extends StatelessWidget {
           Provider<ChatProvider>(
             create: (context) =>
                 ChatProvider(firebaseFirestore: firebaseFirestore),
+          ),
+          Provider<FriendsSearchProvider>(
+            create: (context) =>
+                FriendsSearchProvider(firebaseFirestore: firebaseFirestore),
           )
         ],
         child: MaterialApp(

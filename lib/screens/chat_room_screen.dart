@@ -7,7 +7,6 @@ import 'package:flutter_chat_app/widgets/chat_room/message_field.dart';
 import 'package:flutter_chat_app/widgets/chat_room/messages_list.dart';
 import 'package:provider/provider.dart';
 
-import '../models/chat_room_dto.dart';
 import '../models/my_user.dart';
 import '../services/auth.dart';
 
@@ -30,9 +29,9 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
   final int _limitIncrement = 20;
   List<QueryDocumentSnapshot> listMessage = [];
   bool isLoadingMoreMessages = false;
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     // chatController.addListener(() {
     //   setState(() {});
@@ -49,7 +48,12 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
       debugPrint("scroll");
       setState(() {
         _limit += _limitIncrement;
-        // isLoadingMoreMessages = true;
+        isLoadingMoreMessages = true;
+        // messages = [];
+      });
+    } else if (isLoadingMoreMessages) {
+      setState(() {
+        isLoadingMoreMessages = false;
         // messages = [];
       });
     }
@@ -106,11 +110,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                       ],
                     ),
                     isLoadingMoreMessages
-                        ? Center(
-                            child: CircularProgressIndicator(
-                              color: UIConstant.primary,
-                            ),
-                          )
+                        ? const Text("loading...")
                         : const SizedBox(),
                     StreamBuilder(
                         stream: _chatProvider.getMessageStream(
@@ -122,16 +122,11 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                           if (snapshot.hasData) {
                             listMessage = snapshot.data!.docs;
                             for (var i in snapshot.data!.docs) {
-                              // debugPrint("MSG ${i.get("message")}");
-                              // debugPrint("MSG ${i.get("user")}");
-                              // debugPrint("MSG ${i.get("createdAt")}");
-
                               MessageDTO message =
                                   MessageDTO.convertFromSnapshot(i);
                               _messages.add(message);
                             }
                           }
-
                           return MessagesList(
                               listScrollController: listScrollController,
                               messagesList: _messages);

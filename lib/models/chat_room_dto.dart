@@ -5,12 +5,10 @@ import 'package:flutter_chat_app/widgets/chat_room/message_card.dart';
 class ChatRoomDTO {
   late String id;
   late List<MyUser> users;
-  late List<MessageDTO> messages;
   late DateTime lastActive;
 
   ChatRoomDTO.create({
     this.users = const [],
-    this.messages = const [],
   }) {
     lastActive = DateTime.now();
   }
@@ -28,16 +26,22 @@ class ChatRoomDTO {
           uid: value['uid'] ?? "");
       users.add(user);
     }));
-    messages = json['messages']! as List<MessageDTO>;
-    lastActive = DateTime.parse(json['id']! as String);
+    lastActive = DateTime.fromMillisecondsSinceEpoch(json['lastActive'] as int);
   }
 
   Map<String, Object> toJSON() {
     return {
       "id": id,
-      "users": users,
-      "messages": messages,
+      "users": {for (var e in users) e.uid: e.toMap()},
       "lastActive": lastActive.toIso8601String()
+    };
+  }
+
+  // no id to create new chat room on firebase
+  Map<String, Object> createNewChatRoom() {
+    return {
+      "users": {for (var e in users) e.uid: e.toMap()},
+      "lastActive": lastActive.millisecondsSinceEpoch
     };
   }
 }

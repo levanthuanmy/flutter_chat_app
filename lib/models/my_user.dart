@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class MyUser {
   late String uid;
-  String name;
-  String email;
+  late String name;
+  late String email;
   late String? avatar;
 
   MyUser({
@@ -24,6 +26,13 @@ class MyUser {
     required this.avatar,
   });
 
+  MyUser.fromDoc(QueryDocumentSnapshot documentSnapshot) {
+    uid = documentSnapshot.id;
+    name = documentSnapshot['name'] ?? "";
+    email = documentSnapshot['email'] ?? "";
+    avatar = documentSnapshot['avatar'] ?? "";
+  }
+
   Map<String, Object> toMap() {
     return {
       "uid": uid,
@@ -35,10 +44,6 @@ class MyUser {
   }
 
   Map<String, Object> getInformationJson() {
-    return {
-      "uid": uid,
-      "name": name,
-      "avatar": avatar ?? "",
-    };
+    return {"uid": uid, "name": name, "avatar": avatar ?? "", "email": email};
   }
 }

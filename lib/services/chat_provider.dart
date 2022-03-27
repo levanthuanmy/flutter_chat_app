@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_chat_app/models/chat_room_dto.dart';
 import 'package:flutter_chat_app/models/message_dto.dart';
+import 'package:flutter_chat_app/models/my_user.dart';
 
 class ChatProvider {
   final FirebaseFirestore firebaseFirestore;
@@ -71,5 +72,37 @@ class ChatProvider {
 
     debugPrint("res send message $result");
     // return result;
+  }
+
+  Future<ChatRoomDTO> findChatRoom(MyUser currentUser, MyUser peerUser) async {
+    var ref = firebaseFirestore.collection("chatRooms");
+
+    var resp = await ref
+        .where("users.${currentUser.uid}.uid", isEqualTo: currentUser.uid)
+        .where("users.${peerUser.uid}.uid", isEqualTo: peerUser.uid)
+        .get();
+
+    Map<String, dynamic> chatRoom = {};
+    if (resp.docs.isEmpty) {
+      ChatRoomDTO newChatRoom = ChatRoomDTO.create(
+        users: [currentUser, peerUser],
+      );
+      debugPrint("new chat room ${newChatRoom}");
+      debugPrint("JSON ${newChatRoom.createNewChatRoom()}");
+      var newChatRoomDocument = await ref.add(newChatRoom.createNewChatRoom());
+      DocumentSnapshot<Map<String, dynamic>> data =
+          await newChatRoomDocument.get();
+      debugPrint("new document chat room .get() ${data}");
+      debugPrint("new document chat room .data() ${data.data()}");
+
+      chatRoom = data.data() ?? {};
+      chatRoom['id'] = data.id;
+    } else {
+      chatRoom = resp.docs[0].data();
+      chatRoom['id'] = resp.docs[0].id;
+    }
+
+    debugPrint("find chat room $chatRoom");
+    return ChatRoomDTO.fromJSON(chatRoom);
   }
 }
